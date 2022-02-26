@@ -25,7 +25,7 @@ async function main() {
   // to a file and then fetching it.
   console.log("Greeter deployed to:", greeter.address);
   fs.writeFileSync(
-    "endpoints.json",
+    "./src/endpoints.json",
     JSON.stringify([greeter.address], undefined, 2),
   );
 }
