@@ -19,8 +19,8 @@ async function main() {
   const greeter = await Greeter.deploy("Hello, jamon!");
 
   // We get the contract to deploy
-  const Token = await hre.ethers.getContractFactory("Token");
-  const token = await Token.deploy();
+  const Token = await hre.ethers.getContractFactory("PHAUToken");
+  const token = await Token.deploy("La token del phau", "HDTPM");
 
   await greeter.deployed();
   await token.deployed();

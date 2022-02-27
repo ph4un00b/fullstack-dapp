@@ -1,8 +1,5 @@
 import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/5.5.4/ethers.esm.js";
-import Greeter from "./artifacts/contracts/Greeter.sol/Greeter.json" assert {
-  type: "json",
-};
-import Token from "./artifacts/contracts/Token.sol/Token.json" assert {
+import Token from "./artifacts/contracts/Token.sol/PHAUToken.json" assert {
   type: "json",
 };
 import endpoints from "./endpoints.json" assert { type: "json" };
@@ -11,8 +8,7 @@ import {
   reactive,
 } from "https://unpkg.com/petite-vue@0.4.1/dist/petite-vue.es.js?module";
 
-const { Greeter: greet_address, Token: token_address } = endpoints;
-console.log("greet: ", greet_address);
+const { Token: token_address } = endpoints;
 console.log("token: ", token_address);
 
 async function request_account() {
@@ -24,13 +20,10 @@ async function request_account() {
 
 function App() {
   return {
-    greeting: "hola!",
     account: "",
     amount: 0,
-    fetch_greeting,
-    set_greeting,
     get_balance,
-    send_coins
+    send_coins,
   };
 
   async function get_balance() {
@@ -47,54 +40,13 @@ function App() {
   async function send_coins() {
     const { ethereum } = window;
     if (!ethereum) return;
-    await request_account()
+    await request_account();
     const provider = new ethers.providers.Web3Provider(ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(token_address, Token.abi, signer);
-    const tx = await contract.transfer(this.account, this.amount)
-    await tx.wait()
-    console.log(`${this.amount} coins sent 2 ${this.account}`)
-  }
-
-  async function set_greeting() {
-    if (this.greeting === "") return;
-    const { ethereum } = window;
-    if (ethereum) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      // MetaMask requires requesting permission to connect users accounts
-      // promp the user
-      await provider.send("eth_requestAccounts", []);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        greet_address,
-        Greeter.abi,
-        signer,
-      );
-
-      const tx = await contract.setGreeting(this.greeting);
-      await tx.wait();
-      await this.fetch_greeting();
-    }
-  }
-
-  async function fetch_greeting() {
-    const { ethereum } = window;
-    if (ethereum) {
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const contract = new ethers.Contract(
-        greet_address,
-        Greeter.abi,
-        provider,
-      );
-
-      try {
-        // calling available read functions!
-        const data = await contract.greet();
-        console.log("solidity", data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
+    const tx = await contract.transfer(this.account, this.amount);
+    await tx.wait();
+    console.log(`${this.amount} coins sent 2 ${this.account}`);
   }
 }
 

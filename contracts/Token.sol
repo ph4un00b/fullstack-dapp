@@ -5,23 +5,12 @@ import "hardhat/console.sol";
 
 // Non standard token, better follow bellow ref:
 // https://eips.ethereum.org/EIPS/eip-20
-contract Token {
-  string public name = "Lazy Cats Token";
-  string public symbol = "LCT";
-  uint public totalSupply = 1000000;
-  mapping(address => uint) balances;
 
-  constructor() {
-    balances[msg.sender] = totalSupply;
-  }
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-  function transfer(address to, uint amount) external {
-    require(balances[msg.sender] >= amount, "Not enough tokens");
-    balances[msg.sender] -= amount;
-    balances[to] += amount;
-  }
-
-  function balanceOf(address account) external view returns (uint) {
-    return balances[account];
-  }
+contract PHAUToken is ERC20 {
+    constructor(string memory name, string memory symbol) ERC20(name, symbol) {
+				// mint meaning, create the token
+        _mint(msg.sender, 100000 * (10 ** 18));
+    }
 }
