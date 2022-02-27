@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.2.2/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>phau dapp</title>
+    <title>dapps & token!</title>
     <style>
         [v-cloak] {
-            display: none;
+            opacity: 0;
         }
     </style>
 </head>
@@ -19,9 +19,8 @@
     <div class="hero min-h-screen" style="background-image: url(https://api.lorem.space/image/fashion?w=500&h=400);">
         <div class="hero-overlay bg-opacity-60"></div>
         <div class="text-center hero-content text-neutral-content">
-            <div v-cloak v-scope="App()" id="web3test" @vue:mounted="console.log($el)" class="w-full">
-                <!-- <pre x-text=""></pre> -->
-                <h1 class="mb-5 text-5xl font-bold">Hello there</h1>
+            <div v-cloak v-scope="App()" id="web3test" class="w-full">
+                <h1 class="mb-5 text-5xl font-bold">pha token</h1>
                 <p class="mb-5"></p>
 
                 <div class="flex flex-col w-full border-opacity-50">
@@ -34,7 +33,22 @@
 
                 <input v-model="greeting" @change="greeting = $event.target.value" type="text" placeholder="Type here"
                     class="text-black input input-bordered input-secondary w-full">
-                <span v-text="greeting">
+
+                <div class="divider">OR</div>
+
+                <div class="flex flex-col w-full border-opacity-50">
+                    <button @click="get_balance" class="btn btn-accent">Get Balance</button>
+                    <div class="divider">OR</div>
+                    <button @click="send_coins" class="btn">Send Koins!</button>
+                </div>
+
+                <br>
+
+                <input @change="account = $event.target.value" type="text" placeholder="Account id."
+                    class="text-black input input-bordered input-accent w-full">
+                <div class="divider">OR</div>
+                <input @change="amount = $event.target.value" type="text" placeholder="Amount."
+                    class="text-black input input-bordered input-info w-full">
             </div>
         </div>
     </div>

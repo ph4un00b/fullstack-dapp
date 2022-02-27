@@ -6,12 +6,12 @@ require("@nomiclabs/hardhat-waffle");
 module.exports = {
   solidity: "0.8.4",
   paths: {
-		// compiled smart constracts.
+    // compiled smart constracts.
     artifacts: "./src/artifacts",
   },
   networks: {
     hardhat: {
-			// should match metamask port.
+      // should match metamask port.
       chainId: 1337,
     },
   },

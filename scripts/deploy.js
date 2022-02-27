@@ -18,15 +18,23 @@ async function main() {
   const Greeter = await hre.ethers.getContractFactory("Greeter");
   const greeter = await Greeter.deploy("Hello, jamon!");
 
+  // We get the contract to deploy
+  const Token = await hre.ethers.getContractFactory("Token");
+  const token = await Token.deploy();
+
   await greeter.deployed();
+  await token.deployed();
 
   // rpc address as endpoints.
   // we can automate the any process by copying the address
   // to a file and then fetching it.
-  console.log("Greeter deployed to:", greeter.address);
   fs.writeFileSync(
     "./src/endpoints.json",
-    JSON.stringify([greeter.address], undefined, 2),
+    JSON.stringify(
+      { Greeter: greeter.address, Token: token.address },
+      undefined,
+      2,
+    ),
   );
 }
 
